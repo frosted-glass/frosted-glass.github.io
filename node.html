@@ -161,7 +161,7 @@ dialog input{width:100%;padding:13px 14px;border-radius:12px;border:1px solid va
 
 <script>
 // ---------- config: edit here ----------
-const API = "https://frosted-glass-api.voidarcyt.workers.dev"; // your Cloudflare Worker URL, no trailing slash
+const API = "https://YOUR-WORKER.workers.dev"; // your Cloudflare Worker URL, no trailing slash
 
 // add more assets here as you make their gamepasses (price = exact Robux price of the pass)
 const ASSETS = {
@@ -263,12 +263,12 @@ el("pay").onclick = () => {
   const next = todo.find(id => !opened.has(id)) || todo[0];
   if (!next) return;
   const link = document.createElement("a");
-link.href = "https://www.roblox.com/game-pass/" + ASSETS[next].passId;
-link.target = "_blank";
-link.rel = "noopener";
-document.body.appendChild(link);
-link.click();
-link.remove();
+  link.href = "https://www.roblox.com/game-pass/" + ASSETS[next].passId;
+  link.target = "_blank";
+  link.rel = "noopener";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
   opened.add(next);
   setMsg("Finish the purchase on Roblox. This page will notice automatically.", false);
   renderCart();
@@ -316,7 +316,7 @@ async function download(id) {
   try {
     const d = await api("/download?passId=" + ASSETS[id].passId + "&session=" + encodeURIComponent(sess.session));
     if (d.url) { setMsg("Download started.", false); location.href = d.url; }
-    else setMsg("Could not prepare the download (" + (d.error || "unknown") + "). Try again.", true);
+    else setMsg("Could not prepare the download (" + (d.error || "unknown") + (d.status ? " " + d.status : "") + (d.detail ? ": " + d.detail : "") + "). Try again.", true);
   } catch (e) { setMsg("Could not reach the server.", true); }
 }
 
