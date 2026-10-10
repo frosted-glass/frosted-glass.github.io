@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#0d1b2a; --sea:#38c9c0; --violet:#8a7dff; --peach:#ffb4a2; --mist:#eaf6ff;
+  --ink:#121212; --sea:#38c9c0; --violet:#8a7dff; --peach:#ffb4a2; --mist:#eaf6ff;
   --glass:rgba(255,255,255,.12); --glass-line:rgba(255,255,255,.28);
   --text:#eaf6ff; --muted:#b4c8da;
   --display:"Bricolage Grotesque",Georgia,sans-serif;
@@ -22,9 +22,6 @@ a{color:var(--text)}
 :focus-visible{outline:3px solid var(--mist);outline-offset:3px;border-radius:8px}
 .backdrop{position:fixed;inset:0;z-index:-1;background:var(--ink)}
 .backdrop i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.75}
-.backdrop i:nth-child(1){width:46vw;height:46vw;left:-10vw;top:-8vw;background:var(--violet)}
-.backdrop i:nth-child(2){width:40vw;height:40vw;right:-8vw;top:20vh;background:var(--sea)}
-.backdrop i:nth-child(3){width:34vw;height:34vw;left:30vw;bottom:-14vw;background:var(--peach);opacity:.5}
 .glass{
   background:var(--glass);border:1px solid var(--glass-line);
   -webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%);
