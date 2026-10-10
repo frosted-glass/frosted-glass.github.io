@@ -1,12 +1,11 @@
 {
-  "assets": [
-    {
-      "id": "buttons",
-      "name": "Glass buttons",
-      "desc": "Primary, secondary and icon buttons",
-      "price": 199,
-      "passId": "2022902447",
-      "thumb": "GlassButton.png"
-    }
-  ]
+  "id": "buttons",
+  "name": "Glass buttons",
+  "desc": "Primary, secondary and icon buttons",
+  "price": 199,
+  "passId": "2022902447",
+  "thumb": "GlassButton.png",
+  "images": ["GlassButton.png"],
+  "details": "A longer description goes here. Blank lines make new paragraphs.",
+  "includes": ["Primary button", "Secondary button", "Icon button"]
 }
