@@ -262,8 +262,13 @@ el("pay").onclick = () => {
   const todo = cart.filter(id => !owned.has(id));
   const next = todo.find(id => !opened.has(id)) || todo[0];
   if (!next) return;
-  const win = window.open("https://www.roblox.com/game-pass/" + ASSETS[next].passId, "_blank", "noopener");
-  if (!win) { setMsg("Your browser blocked the Roblox tab. Allow pop-ups and try again.", true); return; }
+  const link = document.createElement("a");
+link.href = "https://www.roblox.com/game-pass/" + ASSETS[next].passId;
+link.target = "_blank";
+link.rel = "noopener";
+document.body.appendChild(link);
+link.click();
+link.remove();
   opened.add(next);
   setMsg("Finish the purchase on Roblox. This page will notice automatically.", false);
   renderCart();
