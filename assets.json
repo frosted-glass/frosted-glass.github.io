@@ -1,0 +1,12 @@
+{
+  "assets": [
+    {
+      "id": "buttons",
+      "name": "Glass buttons",
+      "desc": "Primary, secondary and icon buttons",
+      "price": 199,
+      "passId": "2022902447",
+      "thumb": "GlassButton.png"
+    }
+  ]
+}
