@@ -347,7 +347,7 @@ ASSETS.forEach(a => {
   el.innerHTML =
     '<div class="preview">' + previews[a.kind]() + '</div>' +
     '<h3></h3><p></p>' +
-    '<div class="foot"><span class="price">$' + a.price + '</span>' +
+    '<div class="foot"><span class="price">' + a.price + 'Robux </span>' +
     '<button class="btn primary small" data-buy="' + a.id + '">Buy</button></div>';
   el.querySelector("h3").textContent = a.name;
   el.querySelector("p").textContent = a.desc;
@@ -422,8 +422,7 @@ function openPass(id) {
 document.addEventListener("click", e => {
   const btn = e.target.closest("[data-buy]");
   if (!btn) return;
-  pendingBuy = btn.dataset.buy;
-  startVerify();
+  location.href = "node.html?items=" + btn.dataset.buy;
 });
 </script>
 </body>
