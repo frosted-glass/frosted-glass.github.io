@@ -9,7 +9,7 @@
       "thumb": "GlassButton.png",
       "images": ["GlassButton.png"],
       "details": "<strong>A clean, universal and customizable button with our unique glass style for your Roblox Game</strong><br>/n<br>/nWhat's included:<li>A plug-and-play customizable button for all Roblox games</li>\n<li>An hover and un-hover animation changing the glass' light reflection</li>\n<br>/n<i><strong>Disclaimer:</strong></i> This UI component does not contain any logic for functionality. These UI components are engineered for you to introduce within your project.<br>/n<br>/n<i>Please review our Terms of Service, Privacy Policy and EULA carefully before completing your purchase. By completing the transaction, you agree to adhere and be bound to the terms described therein.",
-      "includes": ["Primary button", "Secondary button", "Icon button"]
+      "includes": ["Primary button"]
     }
   ]
 }
