@@ -8,7 +8,7 @@
 <meta name="description" content="Glass-style UI assets for Roblox games. Buy single assets or the full bundle.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#0d1b2a; --sea:#38c9c0; --violet:#8a7dff; --peach:#ffb4a2; --mist:#eaf6ff;
@@ -25,9 +25,9 @@ body{
 }
 /* backdrop that the glass sits on */
 /* backdrop: solid gray with a top blue glow */
-.backdrop{position:fixed;inset:0;z-index:-1;background:#555555}
+.backdrop{position:absolute;inset:0;z-index:-1;background:#121212}
 .backdrop i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.6}
-.backdrop i:nth-child(1){width:60vw;height:35vw;left:20vw;top:-15vw;background:#38c9c0}
+.backdrop i:nth-child(1){width:60vw;height:35vw;left:20vw;top:-15vw;background:#005df5}
 .backdrop i:nth-child(2), .backdrop i:nth-child(3){display:none}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--mist);outline-offset:3px;border-radius:8px}
@@ -254,18 +254,12 @@ input[type=text]{width:100%;padding:13px 14px;border-radius:12px;border:1px soli
 
 <section id="faq">
   <div class="wrap">
-    <h2>Your questions.</h2>
-    <h2>Answered.</h2>
+    <h1>Your questions, answered.</h1>
+    <details class="glass"><summary>What is Frosted Glass?</summary><p>We provide developers with the highest quality UI components, with our unique Frosted Glass style and appearance, as well as tutorials for aspiring and growing developers.</p>
     <details class="glass"><summary>What file format do I get?</summary><p>You receive a .rbxm file.</p></details>
     <details class="glass"><summary>Can I use the assets in a commercial game?</summary><p>You are allowed to use these assets in a commercial project, but you aren't allowed to redistribute, sell or pirate any of out assets..</p></details>
-    <details class="glass"><summary>Do I get updates?</summary><p>There are no updates after a purchase of a specific asset.</p></details>
-    <details class="glass"><summary>What if my bio code is not accepted?</summary><p>Check that the code is on its own line in your bio, with no extra characters, then try again. Profile changes can take a minute to show.</p></details>
-    <details class="glass"><summary>What payment methods can I use?</summary><p>We only accept Robux payments.</p></details>
     <details class="glass"><summary>Do I get future assets by purchasing the bundle?</summary><p>Yes, you do receive any future assets by purchasing our bundle.</p></details>
     <details class="glass"><summary>Will I have access to my purchased assets anytime?</summary><p>Yes, by verifying your identity, you can see all of your purchased assets.</p></details>
-    <details class="glass"><summary>Are the transactions secure?</summary><p>Yes, all transactions processed by Node are secure.</p></details>
-    <details class="glass"><summary>What is Node?</summary><p>Node is our transaction system, used to process all payments.</p></details>
-    <details class="glass"><summary>Who owns Node?</summary><p>We are the owners and creators of Node. If you see another website using Node, it is not us. We do not share our technologies with other entities.</p></details>
   </div>
 </section>
 
@@ -277,13 +271,13 @@ input[type=text]{width:100%;padding:13px 14px;border-radius:12px;border:1px soli
     </div>
 
     <nav class="foot-links" aria-label="Legal">
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Service</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
       <a href="eula.html">EULA</a>
     </nav>
 
     <p class="foot-note">
-      Not affiliated with Roblox Corporation. Roblox is a trademark of Roblox Corporation.
+      All rights reserved. Not affiliated with Roblox Corporation.
     </p>
   </div>
 </footer>
@@ -341,6 +335,7 @@ const previews = {
   note:   () => '<div class="mini-note">Quest complete</div>',
   tabs:   () => '<div class="mini-tabs"><span>Shop</span><span>Items</span><span>Stats</span></div>'
 };
+  
 const grid = document.getElementById("grid");
 ASSETS.forEach(a => {
   const el = document.createElement("article");
@@ -354,28 +349,6 @@ ASSETS.forEach(a => {
   el.querySelector("p").textContent = a.desc;
   grid.appendChild(el);
 });
-
-// ---------- hero demo ----------
-let hp = 70;
-const hpBar = document.getElementById("hpBar"), hpText = document.getElementById("hpText");
-const setHp = v => { hp = Math.max(0, Math.min(100, v)); hpBar.style.width = hp + "%"; hpText.textContent = hp; };
-setHp(hp);
-document.getElementById("hurt").onclick = () => setHp(hp - 15);
-document.getElementById("heal").onclick = () => setHp(hp + 15);
-const slotsEl = document.getElementById("slots");
-["\u2694","\u{1F6E1}","\u2728","\u{1F9EA}"].forEach((ic, i) => {
-  const b = document.createElement("button");
-  b.className = "slot"; b.textContent = ic; b.setAttribute("aria-pressed", i === 0);
-  b.setAttribute("aria-label", "Slot " + (i + 1));
-  b.onclick = () => { slotsEl.querySelectorAll(".slot").forEach(s => s.setAttribute("aria-pressed", s === b)); };
-  slotsEl.appendChild(b);
-});
-const sw = document.getElementById("sw"), hint = document.getElementById("demoHint");
-sw.onclick = () => {
-  const on = sw.getAttribute("aria-checked") !== "true";
-  sw.setAttribute("aria-checked", on);
-  hint.textContent = on ? "Notifications on." : "Notifications off.";
-};
 
 // ---------- verification flow (needs your backend) ----------
 const dlg = document.getElementById("verifyDialog");
