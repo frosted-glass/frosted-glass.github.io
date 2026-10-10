@@ -79,6 +79,21 @@ h2{font-family:var(--display);font-weight:700;font-size:1.2rem;margin-bottom:14p
 .legal a{color:var(--text)}
 .msg{min-height:1.3em;text-align:center;font-size:.9rem;color:var(--peach)}
 
+[hidden]{display:none!important}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--glass-line)}
+.btn.small{display:inline-block;width:auto;padding:8px 16px;font-size:.9rem;border-radius:12px}
+.msg.ok{color:var(--sea)}
+dialog{margin:auto;padding:28px;width:min(440px,92vw);color:var(--text);background:rgba(13,27,42,.86);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);border:1px solid var(--glass-line);border-radius:24px}
+dialog::backdrop{background:rgba(5,12,24,.6)}
+dialog h3{font-family:var(--display);font-size:1.3rem;margin-bottom:8px}
+dialog p{color:var(--muted);margin-bottom:14px}
+.code{display:block;text-align:center;font:700 1.5rem var(--display);letter-spacing:.08em;padding:14px;border-radius:14px;background:var(--glass);border:1px dashed var(--glass-line);margin-bottom:14px;user-select:all}
+dialog input{width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--glass-line);background:rgba(0,0,0,.25);color:var(--text);font:1rem var(--body);margin-bottom:12px}
+.vmsg{min-height:1.4em;margin-bottom:12px;font-size:.92rem;color:var(--muted)}
+.vmsg.err{color:var(--peach)}
+.vactions{display:flex;gap:10px;justify-content:flex-end}
+.vactions .btn{width:auto}
+
 @media(max-width:820px){
   .checkout{grid-template-columns:1fr;padding:18px}
   .list{max-height:none}
@@ -111,7 +126,7 @@ h2{font-family:var(--display);font-weight:700;font-size:1.2rem;margin-bottom:14p
         <div class="avatar" id="avatar" aria-hidden="true">?</div>
         <div class="dn" id="dn">Display name</div>
         <div class="un" id="un">@username</div>
-        <a href="index.html" id="notYou">Not you? Verify a different account</a>
+        <a href="#" id="notYou">Not you? Verify a different account</a>
       </div>
 
       <div class="totals glass">
@@ -120,6 +135,7 @@ h2{font-family:var(--display);font-weight:700;font-size:1.2rem;margin-bottom:14p
       </div>
 
       <button class="btn" id="pay" type="button"></button>
+      <button class="btn ghost" id="recheck" type="button" hidden>I've paid, check again</button>
       <div class="msg" id="msg" role="status"></div>
       <p class="note">You'll complete the payment on <b>Roblox</b>. We never ask for your password or cookie.</p>
       <p class="legal">By continuing, you agree to our <a href="terms.html">Terms of Service</a>, <a href="eula.html">EULA</a> and <a href="privacy.html">Privacy Policy</a>.</p>
@@ -128,43 +144,60 @@ h2{font-family:var(--display);font-weight:700;font-size:1.2rem;margin-bottom:14p
   </main>
 </div>
 
+<dialog id="verifyDialog">
+  <h3>Verify your Roblox account</h3>
+  <div id="vStep1">
+    <p>Enter your Roblox username. We never ask for your password or cookie.</p>
+    <input type="text" id="vUser" placeholder="Roblox username" autocomplete="off" aria-label="Roblox username">
+    <div class="vactions"><button class="btn ghost small" id="vCancel" type="button">Cancel</button><button class="btn small" id="vStart" type="button">Continue</button></div>
+  </div>
+  <div id="vStep2" hidden>
+    <p>Paste this code anywhere in your Roblox profile bio, save it, then confirm. You can delete it afterwards.</p>
+    <span class="code" id="vCode">...</span>
+    <div class="vactions"><button class="btn small" id="vConfirm" type="button">I added the code</button></div>
+  </div>
+  <div class="vmsg" id="vMsg" role="status"></div>
+</dialog>
+
 <script>
 // ---------- config: edit here ----------
-const DEMO = true; // set to false once your backend saves the verified user
-const DEMO_USER = { displayName: "Display name", username: "username" };
+const API = "https://YOUR-WORKER.workers.dev"; // your Cloudflare Worker URL, no trailing slash
 
-// prices are the exact Robux prices on each gamepass
+// add more assets here as you make their gamepasses (price = exact Robux price of the pass)
 const ASSETS = {
-  buttons: { name: "Glass buttons",       desc: "Primary, secondary and icon buttons", price: 199, passUrl: "https://www.roblox.com/game-pass/0000001/Buttons" },
-  toggles: { name: "Glass toggles",       desc: "Switches and checkboxes",             price: 199, passUrl: "https://www.roblox.com/game-pass/0000002/Toggles" },
-  bars:    { name: "Health and stat bars",desc: "Health, stamina and XP bars",         price: 249, passUrl: "https://www.roblox.com/game-pass/0000003/Bars" },
-  inv:     { name: "Inventory grid",      desc: "Slot grid with selection",            price: 299, passUrl: "https://www.roblox.com/game-pass/0000004/Inventory" },
-  notify:  { name: "Notifications",       desc: "Stacking toast notifications",        price: 249, passUrl: "https://www.roblox.com/game-pass/0000005/Notify" },
-  tabs:    { name: "Tab bar and menus",   desc: "Tab navigation and main menu",        price: 299, passUrl: "https://www.roblox.com/game-pass/0000006/Tabs" },
-  bundle:  { name: "Full bundle",         desc: "All assets plus future additions",    price: 999, passUrl: "https://www.roblox.com/game-pass/0000000/Bundle" }
+  buttons: { name: "Glass buttons", desc: "Primary, secondary and icon buttons", price: 199, passId: "2022902447" }
 };
 
-// cart comes from the link, e.g. node.html?items=buttons,toggles (falls back to a demo cart)
-const params = new URLSearchParams(location.search);
-let cart = (params.get("items") || "buttons").split(",").filter(id => ASSETS[id]);
-const opened = new Set();
-
-// ---------- user ----------
-let user = null;
-try { user = JSON.parse(localStorage.getItem("fg_user")); } catch (e) {}
-if (!user && DEMO) user = DEMO_USER;
-
+// ---------- helpers ----------
 const el = id => document.getElementById(id);
 const money = n => n.toLocaleString("en-US") + " R$";
+const params = new URLSearchParams(location.search);
+let cart = (params.get("items") || "buttons").split(",").filter(id => ASSETS[id]);
+const opened = new Set(), owned = new Set();
 
+let sess = null;
+try { sess = JSON.parse(sessionStorage.getItem("fg_session")); } catch (e) {}
+function saveSess(s) {
+  sess = s;
+  try { s ? sessionStorage.setItem("fg_session", JSON.stringify(s)) : sessionStorage.removeItem("fg_session"); } catch (e) {}
+}
+
+async function api(path, opts) { const r = await fetch(API + path, opts); return r.json(); }
+const post = (path, body) => api(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+
+function setMsg(text, isErr) { const m = el("msg"); m.textContent = text; m.className = "msg" + (isErr ? "" : " ok"); }
+
+// ---------- user panel ----------
 function renderUser() {
-  if (user) {
-    el("dn").textContent = user.displayName || user.username;
-    el("un").textContent = "@" + user.username;
-    el("avatar").textContent = (user.displayName || user.username || "?").charAt(0).toUpperCase();
+  if (sess) {
+    el("dn").textContent = sess.displayName || sess.username;
+    el("un").textContent = "@" + sess.username;
+    el("avatar").textContent = (sess.displayName || sess.username || "?").charAt(0).toUpperCase();
+    el("notYou").textContent = "Not you? Verify a different account";
   } else {
     el("dn").textContent = "Not verified";
     el("un").textContent = "Verify your account to continue";
+    el("avatar").textContent = "?";
     el("notYou").textContent = "Verify account";
   }
 }
@@ -186,12 +219,21 @@ function renderCart() {
     row.innerHTML =
       '<div class="thumb"><i></i></div>' +
       '<div><h3></h3><p></p><span class="state"></span></div>' +
-      '<div class="right"><span class="price"></span><button class="remove" type="button">Remove</button></div>';
+      '<div class="right"><span class="price"></span></div>';
     row.querySelector("h3").textContent = a.name;
     row.querySelector("p").textContent = a.desc;
-    row.querySelector(".state").textContent = opened.has(id) ? "Opened on Roblox" : "";
+    row.querySelector(".state").textContent = owned.has(id) ? "Purchased" : opened.has(id) ? "Waiting for your purchase..." : "";
     row.querySelector(".price").textContent = money(a.price);
-    row.querySelector(".remove").onclick = () => { cart = cart.filter(x => x !== id); renderCart(); };
+    const right = row.querySelector(".right");
+    const b = document.createElement("button");
+    if (owned.has(id)) {
+      b.className = "btn small"; b.type = "button"; b.textContent = "Download";
+      b.onclick = () => download(id);
+    } else {
+      b.className = "remove"; b.type = "button"; b.textContent = "Remove";
+      b.onclick = () => { cart = cart.filter(x => x !== id); renderCart(); };
+    }
+    right.appendChild(b);
     list.appendChild(row);
   });
 
@@ -200,27 +242,113 @@ function renderCart() {
   el("subtotal").textContent = money(total);
   el("total").textContent = money(total);
 
-  const left = cart.filter(id => !opened.has(id));
+  const todo = cart.filter(id => !owned.has(id));
   const pay = el("pay");
-  pay.disabled = !cart.length || !user;
-  if (!cart.length) pay.textContent = "Nothing to pay";
-  else if (cart.length === 1 || opened.size === 0 && cart.length === 1) pay.textContent = "Pay " + money(total) + " on Roblox";
-  else if (left.length) pay.textContent = "Pay " + money(ASSETS[left[0]].price) + " on Roblox (" + (cart.length - left.length + 1) + " of " + cart.length + ")";
-  else pay.textContent = "All passes opened";
-  if (!left.length && cart.length) pay.disabled = true;
+  pay.disabled = false;
+  if (!cart.length) { pay.textContent = "Nothing to pay"; pay.disabled = true; }
+  else if (!sess) pay.textContent = "Verify account to continue";
+  else if (!todo.length) { pay.textContent = "All purchased"; pay.disabled = true; }
+  else {
+    const next = todo.find(id => !opened.has(id)) || todo[0];
+    pay.textContent = "Pay " + money(ASSETS[next].price) + " on Roblox" +
+      (cart.length > 1 ? " (" + (cart.length - todo.length + 1) + " of " + cart.length + ")" : "");
+  }
+  el("recheck").hidden = !(sess && cart.some(id => opened.has(id) && !owned.has(id)));
 }
 
-// ---------- pay ----------
+// ---------- pay, then wait for the purchase ----------
 el("pay").onclick = () => {
-  const next = cart.find(id => !opened.has(id));
+  if (!sess) { openDialog(); return; }
+  const todo = cart.filter(id => !owned.has(id));
+  const next = todo.find(id => !opened.has(id)) || todo[0];
   if (!next) return;
-  el("msg").textContent = "";
-  const win = window.open(ASSETS[next].passUrl, "_blank", "noopener");
-  if (!win) { el("msg").textContent = "Your browser blocked the Roblox tab. Allow pop-ups and try again."; return; }
+  const win = window.open("https://www.roblox.com/game-pass/" + ASSETS[next].passId, "_blank", "noopener");
+  if (!win) { setMsg("Your browser blocked the Roblox tab. Allow pop-ups and try again.", true); return; }
   opened.add(next);
-  // when your backend exists: poll /api/owns?pass=... here, then unlock the download
+  setMsg("Finish the purchase on Roblox. This page will notice automatically.", false);
   renderCart();
-  if (cart.length > 1) el("msg").textContent = "Each asset is its own Roblox gamepass. Finish this one, then come back and continue.";
+  startPolling();
+};
+el("recheck").onclick = () => { setMsg("Checking...", false); startPolling(); };
+
+let pollTimer = null, pollUntil = 0;
+function startPolling() {
+  pollUntil = Date.now() + 5 * 60 * 1000;
+  clearInterval(pollTimer);
+  checkOwnership();
+  pollTimer = setInterval(checkOwnership, 5000);
+}
+async function checkOwnership() {
+  if (!sess) { clearInterval(pollTimer); return; }
+  if (Date.now() > pollUntil) {
+    clearInterval(pollTimer);
+    setMsg("Still not seeing it. Finish the purchase on Roblox, then press \"I've paid, check again\".", true);
+    return;
+  }
+  const pending = cart.filter(id => opened.has(id) && !owned.has(id));
+  if (!pending.length) { clearInterval(pollTimer); return; }
+  for (const id of pending) {
+    try {
+      const d = await api("/owns?passId=" + ASSETS[id].passId + "&session=" + encodeURIComponent(sess.session));
+      if (d.error === "private_inventory") {
+        clearInterval(pollTimer);
+        setMsg("Your inventory is private. In Roblox privacy settings, set who can see your inventory to Everyone, then press \"I've paid, check again\".", true);
+        return;
+      }
+      if (d.error === "bad_session") {
+        clearInterval(pollTimer); saveSess(null); renderUser(); renderCart();
+        setMsg("Your verification expired. Please verify again.", true);
+        return;
+      }
+      if (d.owned) { owned.add(id); setMsg("Purchase found. You can download now.", false); }
+    } catch (e) {}
+  }
+  renderCart();
+}
+
+async function download(id) {
+  setMsg("Preparing your download...", false);
+  try {
+    const d = await api("/download?passId=" + ASSETS[id].passId + "&session=" + encodeURIComponent(sess.session));
+    if (d.url) { setMsg("Download started.", false); location.href = d.url; }
+    else setMsg("Could not prepare the download (" + (d.error || "unknown") + "). Try again.", true);
+  } catch (e) { setMsg("Could not reach the server.", true); }
+}
+
+// ---------- verification dialog ----------
+const dlg = el("verifyDialog");
+let vToken = null;
+function setV(text, isErr) { const m = el("vMsg"); m.textContent = text; m.className = "vmsg" + (isErr ? " err" : ""); }
+function openDialog() {
+  vToken = null;
+  el("vStep1").hidden = false; el("vStep2").hidden = true; setV("");
+  if (!dlg.open) dlg.showModal();
+}
+el("notYou").onclick = e => {
+  e.preventDefault();
+  saveSess(null); owned.clear(); opened.clear(); clearInterval(pollTimer);
+  renderUser(); renderCart(); openDialog();
+};
+el("vCancel").onclick = () => dlg.close();
+el("vStart").onclick = async () => {
+  const username = el("vUser").value.trim();
+  if (!username) { setV("Enter your Roblox username.", true); return; }
+  setV("Looking up your account...");
+  try {
+    const d = await post("/verify/start", { username });
+    if (d.error) { setV(d.error === "user not found" ? "We couldn't find that username." : "Something went wrong. Try again.", true); return; }
+    vToken = d.token; el("vCode").textContent = d.code;
+    el("vStep1").hidden = true; el("vStep2").hidden = false; setV("");
+  } catch (e) { setV("Could not reach the server.", true); }
+};
+el("vConfirm").onclick = async () => {
+  setV("Checking your bio...");
+  try {
+    const d = await post("/verify/confirm", { token: vToken });
+    if (!d.ok) { setV(d.message || "Code not found in your bio.", true); return; }
+    saveSess({ session: d.session, username: d.username, displayName: d.displayName });
+    dlg.close(); renderUser(); renderCart(); setMsg("Verified. You can pay now.", false);
+  } catch (e) { setV("Could not reach the server.", true); }
 };
 
 renderUser();
