@@ -1,16 +1,141 @@
-<div class="grid" id="products"></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Products - Frosted Glass</title>
+<meta name="description" content="Glass-style UI assets for Roblox games.">
+<link rel="icon" type="image/png" href="/FrostedGlassLogo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0d1b2a; --sea:#38c9c0; --violet:#8a7dff; --peach:#ffb4a2; --mist:#eaf6ff;
+  --glass:rgba(255,255,255,.12); --glass-line:rgba(255,255,255,.28);
+  --text:#eaf6ff; --muted:#a9bfd3;
+  --display:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);color:var(--text);line-height:1.6;background:var(--ink);min-height:100vh;overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--mist);outline-offset:3px;border-radius:8px}
+
+.backdrop{position:fixed;inset:0;z-index:-1;background:var(--ink)}
+.backdrop i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.75}
+.backdrop i:nth-child(1){width:46vw;height:46vw;left:-10vw;top:-8vw;background:var(--violet)}
+.backdrop i:nth-child(2){width:40vw;height:40vw;right:-8vw;top:20vh;background:var(--sea)}
+.backdrop i:nth-child(3){width:34vw;height:34vw;left:30vw;bottom:-14vw;background:var(--peach);opacity:.5}
+
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+.glass{
+  background:var(--glass);border:1px solid var(--glass-line);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 18px 40px rgba(5,12,24,.35);
+}
+h1,h2,h3{font-family:var(--display);line-height:1.1;letter-spacing:-.03em}
+h1{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:800}
+h3{font-size:1.15rem;font-weight:700}
+
+/* nav */
+nav{position:sticky;top:0;z-index:10;padding-top:env(safe-area-inset-top,0px);border-width:0 0 1px 0;box-shadow:none}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.2rem;letter-spacing:-.02em;text-decoration:none}
+.brand img{border-radius:8px}
+.links{display:flex;gap:22px;align-items:center}
+.links a{text-decoration:none;color:var(--muted);font-weight:500}
+.links a:hover,.links a[aria-current]{color:var(--text)}
+
+/* buttons */
+.btn{display:inline-block;border:0;cursor:pointer;font:600 1rem var(--body);text-decoration:none;padding:14px 26px;border-radius:14px;transition:transform .15s,box-shadow .15s}
+.btn.primary{background:var(--mist);color:var(--ink)}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(234,246,255,.25)}
+.btn.small{padding:10px 18px;font-size:.92rem;border-radius:12px}
+
+/* page */
+header.intro{padding:56px 0 8px}
+header.intro p{color:var(--muted);font-size:1.1rem;max-width:48ch;margin-top:12px}
+main{padding:32px 0 72px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+.card{border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.card img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:14px;background:linear-gradient(135deg,rgba(138,125,255,.45),rgba(56,201,192,.45))}
+.card p{color:var(--muted);font-size:.95rem;flex:1}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.price{font-weight:800;font-size:1.25rem;letter-spacing:-.02em}
+.status{color:var(--muted);padding:24px 0}
+
+/* footer */
+footer{padding:32px 0 calc(40px + env(safe-area-inset-bottom,0px));color:var(--muted);font-size:.92rem;border-top:1px solid var(--glass-line)}
+.foot-grid{display:grid;grid-template-columns:1fr auto;gap:16px 40px;align-items:center}
+.foot-brand{display:flex;align-items:center;gap:12px;font-weight:700;color:var(--text);font-size:1.05rem}
+.foot-brand img{border-radius:10px}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap;justify-content:flex-end}
+.foot-links a{color:var(--muted);text-decoration:none}
+.foot-links a:hover{color:var(--text);text-decoration:underline}
+.foot-note{grid-column:1 / -1}
+
+@media(max-width:820px){
+  .links a:not(.btn){display:none}
+  .foot-grid{grid-template-columns:1fr}
+  .foot-links{justify-content:flex-start}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="backdrop" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<nav class="glass">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/FrostedGlassLogo.png" alt="" width="32" height="32">Frosted Glass</a>
+    <div class="links">
+      <a href="/">Home</a>
+      <a href="/product/" aria-current="page">Products</a>
+    </div>
+  </div>
+</nav>
+
+<header class="intro">
+  <div class="wrap">
+    <h1>Products</h1>
+    <p>Glass UI assets for your Roblox game. Every asset shares the same style, so they match when you combine them.</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="grid" id="products"></div>
+    <p class="status" id="status" role="status">Loading products...</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div class="foot-brand"><img src="/FrostedGlassLogo.png" alt="" width="36" height="36">Frosted Glass</div>
+    <nav class="foot-links" aria-label="Legal">
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+      <a href="/eula.html">EULA</a>
+    </nav>
+    <p class="foot-note">Not affiliated with Roblox Corporation. Roblox is a trademark of Roblox Corporation.</p>
+  </div>
+</footer>
 
 <script>
-fetch("assets.json")
-  .then(r => r.json())
+// paths start with "/" because this page lives in the /product/ folder
+fetch("/assets.json")
+  .then(r => { if (!r.ok) throw new Error("bad response"); return r.json(); })
   .then(data => {
     const grid = document.getElementById("products");
-    data.assets.forEach(a => {
+    const list = data.assets || [];
+    list.forEach(a => {
       const card = document.createElement("article");
       card.className = "card glass";
 
       const img = document.createElement("img");
-      img.src = a.thumb;
+      img.src = "/" + a.thumb;
       img.alt = a.name;
       img.loading = "lazy";
 
@@ -20,17 +145,27 @@ fetch("assets.json")
       const desc = document.createElement("p");
       desc.textContent = a.desc;
 
+      const foot = document.createElement("div");
+      foot.className = "foot";
+
       const price = document.createElement("span");
       price.className = "price";
       price.textContent = a.price + " R$";
 
       const buy = document.createElement("a");
       buy.className = "btn primary small";
-      buy.href = "node.html?items=" + a.id;
+      buy.href = "/node.html?items=" + encodeURIComponent(a.id);
       buy.textContent = "Buy";
 
-      card.append(img, name, desc, price, buy);
+      foot.append(price, buy);
+      card.append(img, name, desc, foot);
       grid.appendChild(card);
     });
+    document.getElementById("status").textContent = list.length ? "" : "No products yet. Check back soon.";
+  })
+  .catch(() => {
+    document.getElementById("status").textContent = "Could not load products. Please refresh the page.";
   });
 </script>
+</body>
+</html>
