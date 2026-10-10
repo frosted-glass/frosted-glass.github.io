@@ -1,0 +1,36 @@
+<div class="grid" id="products"></div>
+
+<script>
+fetch("assets.json")
+  .then(r => r.json())
+  .then(data => {
+    const grid = document.getElementById("products");
+    data.assets.forEach(a => {
+      const card = document.createElement("article");
+      card.className = "card glass";
+
+      const img = document.createElement("img");
+      img.src = a.thumb;
+      img.alt = a.name;
+      img.loading = "lazy";
+
+      const name = document.createElement("h3");
+      name.textContent = a.name;
+
+      const desc = document.createElement("p");
+      desc.textContent = a.desc;
+
+      const price = document.createElement("span");
+      price.className = "price";
+      price.textContent = a.price + " R$";
+
+      const buy = document.createElement("a");
+      buy.className = "btn primary small";
+      buy.href = "node.html?items=" + a.id;
+      buy.textContent = "Buy";
+
+      card.append(img, name, desc, price, buy);
+      grid.appendChild(card);
+    });
+  });
+</script>
