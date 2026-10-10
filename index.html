@@ -21,10 +21,9 @@
 html{scroll-behavior:smooth}
 body{
   font-family:var(--body);color:var(--text);line-height:1.6;background:var(--ink);
-  min-height:100vh;overflow-x:hidden;
+  min-height:100vh;overflow-x:hidden;position:relative;
 }
 /* backdrop that the glass sits on */
-/* backdrop: solid gray with a top blue glow */
 .backdrop{position:absolute;inset:0;z-index:-1;background:#121212}
 .backdrop i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.6}
 .backdrop i:nth-child(1){width:60vw;height:35vw;left:20vw;top:-15vw;background:#005df5}
@@ -44,14 +43,22 @@ h3{font-size:1.15rem;font-weight:700}
 p.lead{color:var(--muted);font-size:1.12rem;max-width:46ch}
 section{padding:72px 0}
 
-/* nav */
-nav{position:sticky;top:0;z-index:10;padding-top:env(safe-area-inset-top,0px)}
-nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
-.brand{font-family:var(--display);font-weight:800;font-size:1.25rem;text-decoration:none}
-.links{display:flex;gap:22px;align-items:center}
-.links a{text-decoration:none;color:var(--muted);font-weight:500}
+/* floating pill nav */
+nav{
+  position:sticky;top:20px;z-index:10;
+  padding-top:env(safe-area-inset-top,0px);
+}
+nav .wrap{
+  max-width:900px;display:flex;align-items:center;justify-content:space-between;
+  height:64px;padding:0 12px 0 20px;border-radius:99px;
+  background:rgba(13, 27, 42, 0.65);
+}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.1rem;text-decoration:none}
+.brand img{border-radius:50%}
+.links{display:flex;gap:24px;align-items:center}
+.links a{text-decoration:none;color:var(--muted);font-weight:500;font-size:.95gr;transition:color .15s}
 .links a:hover{color:var(--text)}
-nav.glass{border-width:0 0 1px 0;box-shadow:none}
+nav.glass{box-shadow:0 10px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,.25)}
 
 /* buttons */
 .btn{
@@ -62,7 +69,7 @@ nav.glass{border-width:0 0 1px 0;box-shadow:none}
 .btn.primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(234,246,255,.25)}
 .btn.ghost{background:transparent;color:var(--text);border:1px solid var(--glass-line)}
 .btn.ghost:hover{background:var(--glass)}
-.btn.small{padding:9px 16px;font-size:.92rem;border-radius:11px}
+.btn.small{padding:10px 20px;font-size:.92rem;border-radius:99px}
 
 /* hero */
 .hero{padding-top:56px}
@@ -176,9 +183,12 @@ input[type=text]{width:100%;padding:13px 14px;border-radius:12px;border:1px soli
 <body>
 <div class="backdrop" aria-hidden="true"><i></i></div>
 
-<nav class="glass">
-  <div class="wrap">
-    <a class="brand" href="#top" id="brandName">Frosted Glass</a>
+<nav>
+  <div class="wrap glass">
+    <a class="brand" href="#top" id="brandName">
+      <img src="FrostedGlassLogo.png" alt="Logo" width="32" height="32">
+      Frosted Glass
+    </a>
     <div class="links">
       <a href="#assets">Assets</a>
       <a href="#bundle">Bundle</a>
@@ -255,7 +265,7 @@ input[type=text]{width:100%;padding:13px 14px;border-radius:12px;border:1px soli
 <section id="faq">
   <div class="wrap">
     <h1>Your questions, answered.</h1>
-    <details class="glass"><summary>What is Frosted Glass?</summary><p>We provide developers with the highest quality UI components, with our unique Frosted Glass style and appearance, as well as tutorials for aspiring and growing developers.</p>
+    <details class="glass"><summary>What is Frosted Glass?</summary><p>We provide developers with the highest quality UI components, with our unique Frosted Glass style and appearance, as well as tutorials for aspiring and growing developers.</p></details>
     <details class="glass"><summary>What file format do I get?</summary><p>You receive a .rbxm file.</p></details>
     <details class="glass"><summary>Can I use the assets in a commercial game?</summary><p>You are allowed to use these assets in a commercial project, but you aren't allowed to redistribute, sell or pirate any of out assets..</p></details>
     <details class="glass"><summary>Do I get future assets by purchasing the bundle?</summary><p>Yes, you do receive any future assets by purchasing our bundle.</p></details>
@@ -299,34 +309,30 @@ input[type=text]{width:100%;padding:13px 14px;border-radius:12px;border:1px soli
 const CONFIG = {
   storeName: "Frosted Glass",
   bundlePrice: 299,
-  // set these to your real gamepass links
   bundleGamepassUrl: "https://www.roblox.com/game-pass/0000000/Bundle",
-  // your backend that checks the bio + gamepass (browsers cannot call Roblox APIs directly: CORS)
   api: {
-    startVerify:  "/api/verify/start",   // POST {username} -> {code}
-    confirmVerify:"/api/verify/confirm", // POST {username} -> {ok, message}
-    ownsPass:     "/api/owns"            // GET ?pass=ID  -> {owned, downloadUrl}
+    startVerify:  "/api/verify/start",
+    confirmVerify:"/api/verify/confirm",
+    ownsPass:     "/api/owns"
   }
 };
 
 const ASSETS = [
-  { id:"buttons",  name:"Glass buttons",      kind:"button",  price:3, passUrl:"https://www.roblox.com/game-pass/0000001/Buttons",  desc:"Primary, secondary and icon buttons with hover and press states." },
-  { id:"toggles",  name:"Glass toggles",      kind:"toggle",  price:3, passUrl:"https://www.roblox.com/game-pass/0000002/Toggles",  desc:"Switches and checkboxes for settings menus." },
+  { id:"buttons",  name:"Glass buttons",      kind:"button",  price:3, passUrl:"https://www.roblox.com/game-pass/0000001/Buttons",    desc:"Primary, secondary and icon buttons with hover and press states." },
+  { id:"toggles",  name:"Glass toggles",      kind:"toggle",  price:3, passUrl:"https://www.roblox.com/game-pass/0000002/Toggles",    desc:"Switches and checkboxes for settings menus." },
   { id:"bars",     name:"Health and stat bars",kind:"bar",    price:4, passUrl:"https://www.roblox.com/game-pass/0000003/Bars",     desc:"Health, stamina and XP bars with smooth fill animation." },
-  { id:"inv",      name:"Inventory grid",     kind:"slots",   price:5, passUrl:"https://www.roblox.com/game-pass/0000004/Inventory",desc:"Slot grid with selection, tooltips and drag support." },
-  { id:"notify",   name:"Notifications",      kind:"note",    price:4, passUrl:"https://www.roblox.com/game-pass/0000005/Notify",   desc:"Toast notifications that stack and fade out." },
-  { id:"tabs",     name:"Tab bar and menus",  kind:"tabs",    price:5, passUrl:"https://www.roblox.com/game-pass/0000006/Tabs",     desc:"Tab navigation and a main menu frame." }
+  { id:"inv",      name:"Inventory grid",     kind:"slots",   price:5, passUrl:"https://www.roblox.com/game-pass/0000004/Inventory",  desc:"Slot grid with selection, tooltips and drag support." },
+  { id:"notify",   name:"Notifications",      kind:"note",    price:4, passUrl:"https://www.roblox.com/game-pass/0000005/Notify",    desc:"Toast notifications that stack and fade out." },
+  { id:"tabs",     name:"Tab bar and menus",  kind:"tabs",    price:5, passUrl:"https://www.roblox.com/game-pass/0000006/Tabs",      desc:"Tab navigation and a main menu frame." }
 ];
 
-// ---------- header, footer, bundle ----------
 document.title = CONFIG.storeName + " - glass UI assets for Roblox";
-document.getElementById("brandName").textContent = CONFIG.storeName;
+document.getElementById("brandName").innerHTML = '<img src="FrostedGlassLogo.png" alt="Logo" width="32" height="32">' + CONFIG.storeName;
 document.getElementById("footName").textContent = CONFIG.storeName;
 document.getElementById("bundlePrice").textContent = "$" + CONFIG.bundlePrice;
 const sum = ASSETS.reduce((a, x) => a + x.price, 0);
 document.getElementById("bundleSave").textContent = "Single assets total $" + sum + " today, and the bundle also covers future releases.";
 
-// ---------- asset cards ----------
 const previews = {
   button: () => '<span class="mini-btn">Play</span>',
   toggle: () => '<div class="mini-toggle"><i class="on"></i><i></i></div>',
@@ -350,7 +356,6 @@ ASSETS.forEach(a => {
   grid.appendChild(el);
 });
 
-// ---------- verification flow (needs your backend) ----------
 const dlg = document.getElementById("verifyDialog");
 const codeText = document.getElementById("codeText");
 const userInput = document.getElementById("usernameInput");
@@ -361,7 +366,6 @@ function setMsg(text, kind) { msg.textContent = text; msg.className = "msg " + (
 
 async function startVerify() {
   setMsg("");
-  // fallback so the page works before the backend exists (demo only, NOT secure)
   codeText.textContent = "GLASS-" + Math.random().toString(36).slice(2, 8).toUpperCase();
   if (!dlg.open) dlg.showModal();
 }
@@ -392,7 +396,6 @@ function openPass(id) {
   if (url) window.open(url, "_blank", "noopener");
 }
 
-// buy buttons: verify first, then send to the gamepass
 document.addEventListener("click", e => {
   const btn = e.target.closest("[data-buy]");
   if (!btn) return;
