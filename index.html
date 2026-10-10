@@ -315,12 +315,12 @@ const CONFIG = {
 };
 
 const ASSETS = [
-  { id:"buttons",  name:"Glass buttons",      kind:"button",  price:3, passUrl:"https://www.roblox.com/game-pass/0000001/Buttons",  desc:"Primary, secondary and icon buttons with hover and press states." },
-  { id:"toggles",  name:"Glass toggles",      kind:"toggle",  price:3, passUrl:"https://www.roblox.com/game-pass/0000002/Toggles",  desc:"Switches and checkboxes for settings menus." },
-  { id:"bars",     name:"Health and stat bars",kind:"bar",    price:4, passUrl:"https://www.roblox.com/game-pass/0000003/Bars",     desc:"Health, stamina and XP bars with smooth fill animation." },
-  { id:"inv",      name:"Inventory grid",     kind:"slots",   price:5, passUrl:"https://www.roblox.com/game-pass/0000004/Inventory",desc:"Slot grid with selection, tooltips and drag support." },
-  { id:"notify",   name:"Notifications",      kind:"note",    price:4, passUrl:"https://www.roblox.com/game-pass/0000005/Notify",   desc:"Toast notifications that stack and fade out." },
-  { id:"tabs",     name:"Tab bar and menus",  kind:"tabs",    price:5, passUrl:"https://www.roblox.com/game-pass/0000006/Tabs",     desc:"Tab navigation and a main menu frame." }
+  { id:"buttons",  name:"Glass buttons",      kind:"button",  price:299, passUrl:"https://www.roblox.com/game-pass/0000001/Buttons",  desc:"Primary, secondary and icon buttons with hover and press states." },
+  { id:"toggles",  name:"Glass toggles",      kind:"toggle",  price:399, passUrl:"https://www.roblox.com/game-pass/0000002/Toggles",  desc:"Switches and checkboxes for settings menus." },
+  { id:"bars",     name:"Health and stat bars",kind:"bar",    price:399, passUrl:"https://www.roblox.com/game-pass/0000003/Bars",     desc:"Health, stamina and XP bars with smooth fill animation." },
+  { id:"inv",      name:"Inventory grid",     kind:"slots",   price:599, passUrl:"https://www.roblox.com/game-pass/0000004/Inventory",desc:"Slot grid with selection, tooltips and drag support." },
+  { id:"notify",   name:"Notifications",      kind:"note",    price:399, passUrl:"https://www.roblox.com/game-pass/0000005/Notify",   desc:"Toast notifications that stack and fade out." },
+  { id:"tabs",     name:"Tab bar and menus",  kind:"tabs",    price:599, passUrl:"https://www.roblox.com/game-pass/0000006/Tabs",     desc:"Tab navigation and a main menu frame." }
 ];
 
 // ---------- header, footer, bundle ----------
@@ -347,8 +347,8 @@ ASSETS.forEach(a => {
   el.innerHTML =
     '<div class="preview">' + previews[a.kind]() + '</div>' +
     '<h3></h3><p></p>' +
-    '<div class="foot"><span class="price">' + a.price + 'Robux </span>' +
-    '<button class="btn primary small" data-buy="' + a.id + '">Buy</button></div>';
+    '<div class="foot"><span class="price">' + a.price + ' Robux </span>' +
+    '<button class="btn primary small" data-buy="' + a.id + '">View asset</button></div>';
   el.querySelector("h3").textContent = a.name;
   el.querySelector("p").textContent = a.desc;
   grid.appendChild(el);
