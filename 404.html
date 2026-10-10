@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Frosted Glass</title>
+<meta name="description" content="Glass-style UI assets for Roblox games.">
+<link rel="icon" type="image/png" href="/FrostedGlassLogo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0d1b2a; --sea:#38c9c0; --violet:#8a7dff; --peach:#ffb4a2; --mist:#eaf6ff;
+  --glass:rgba(255,255,255,.12); --glass-line:rgba(255,255,255,.28);
+  --text:#eaf6ff; --muted:#a9bfd3;
+  --display:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+body{font-family:var(--body);color:var(--text);line-height:1.6;background:var(--ink);min-height:100vh;overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--mist);outline-offset:3px;border-radius:8px}
+
+.backdrop{position:fixed;inset:0;z-index:-1;background:var(--ink)}
+.backdrop i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.75}
+.backdrop i:nth-child(1){width:46vw;height:46vw;left:-10vw;top:-8vw;background:var(--violet)}
+.backdrop i:nth-child(2){width:40vw;height:40vw;right:-8vw;top:20vh;background:var(--sea)}
+.backdrop i:nth-child(3){width:34vw;height:34vw;left:30vw;bottom:-14vw;background:var(--peach);opacity:.5}
+
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+.glass{
+  background:var(--glass);border:1px solid var(--glass-line);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 18px 40px rgba(5,12,24,.35);
+}
+h1,h2,h3{font-family:var(--display);line-height:1.1;letter-spacing:-.03em}
+h1{font-size:clamp(2rem,4.5vw,3rem);font-weight:800}
+h2{font-size:1.35rem;font-weight:700;margin-bottom:10px}
+
+/* nav */
+nav.top{position:sticky;top:0;z-index:10;padding-top:env(safe-area-inset-top,0px);border-width:0 0 1px 0;box-shadow:none}
+nav.top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.2rem;letter-spacing:-.02em;text-decoration:none}
+.brand img{border-radius:8px}
+.links{display:flex;gap:22px;align-items:center}
+.links a{text-decoration:none;color:var(--muted);font-weight:500}
+.links a:hover,.links a[aria-current]{color:var(--text)}
+
+/* buttons */
+.btn{display:inline-block;border:0;cursor:pointer;font:600 1rem var(--body);text-decoration:none;padding:14px 26px;border-radius:14px;text-align:center;transition:transform .15s,box-shadow .15s}
+.btn.primary{background:var(--mist);color:var(--ink)}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(234,246,255,.25)}
+.btn.block{display:block;width:100%;font-size:1.05rem;padding:16px 26px}
+
+/* overview */
+main{padding:28px 0 72px}
+.crumb{display:inline-block;color:var(--muted);text-decoration:none;font-weight:500;margin-bottom:18px}
+.crumb:hover{color:var(--text)}
+.detail{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:start}
+.stage{width:100%;aspect-ratio:16/10;object-fit:contain;padding:32px;border-radius:22px;background:linear-gradient(135deg,rgba(138,125,255,.45),rgba(56,201,192,.45));border:1px solid var(--glass-line);display:block}
+.thumbs{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.thumbs button{width:88px;height:62px;padding:6px;border-radius:12px;cursor:pointer;border:1px solid var(--glass-line);background:linear-gradient(135deg,rgba(138,125,255,.35),rgba(56,201,192,.35))}
+.thumbs button[aria-pressed="true"]{outline:2px solid var(--mist)}
+.thumbs img{width:100%;height:100%;object-fit:contain;display:block}
+.info{border-radius:24px;padding:26px;display:grid;gap:16px}
+.price{font-weight:800;font-size:2rem;letter-spacing:-.03em}
+.short{color:var(--muted)}
+.facts{list-style:none;padding:0;display:grid;gap:8px;color:var(--muted);font-size:.95rem}
+.facts li{display:flex;justify-content:space-between;gap:16px;border-top:1px solid var(--glass-line);padding-top:8px}
+.facts b{color:var(--text);font-weight:600;text-align:right}
+.facts a{color:var(--text)}
+.more{margin-top:28px;border-radius:24px;padding:26px;display:grid;gap:22px}
+.more p{color:var(--muted);max-width:70ch;white-space:pre-line}
+.more ul{padding-left:20px;color:var(--muted)}
+.more li{margin-bottom:6px}
+.notfound{border-radius:24px;padding:40px;max-width:520px;margin:40px auto;display:grid;gap:14px;justify-items:start}
+.notfound p{color:var(--muted)}
+.status{color:var(--muted);padding:24px 0}
+
+/* footer */
+footer{padding:32px 0 calc(40px + env(safe-area-inset-bottom,0px));color:var(--muted);font-size:.92rem;border-top:1px solid var(--glass-line)}
+.foot-grid{display:grid;grid-template-columns:1fr auto;gap:16px 40px;align-items:center}
+.foot-brand{display:flex;align-items:center;gap:12px;font-weight:700;color:var(--text);font-size:1.05rem}
+.foot-brand img{border-radius:10px}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap;justify-content:flex-end}
+.foot-links a{color:var(--muted);text-decoration:none}
+.foot-links a:hover{color:var(--text);text-decoration:underline}
+.foot-note{grid-column:1 / -1}
+
+@media(max-width:820px){
+  .detail{grid-template-columns:1fr}
+  .links a:not(.btn){display:none}
+  .foot-grid{grid-template-columns:1fr}
+  .foot-links{justify-content:flex-start}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="backdrop" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<nav class="top glass">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/FrostedGlassLogo.png" alt="" width="32" height="32">Frosted Glass</a>
+    <div class="links">
+      <a href="/">Home</a>
+      <a href="/product/" aria-current="page">Products</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap" id="view"><p class="status" role="status">Loading...</p></div>
+</main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div class="foot-brand"><img src="/FrostedGlassLogo.png" alt="" width="36" height="36">Frosted Glass</div>
+    <nav class="foot-links" aria-label="Legal">
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+      <a href="/eula.html">EULA</a>
+    </nav>
+    <p class="foot-note">Not affiliated with Roblox Corporation. Roblox is a trademark of Roblox Corporation.</p>
+  </div>
+</footer>
+
+<script>
+// Works for /product/<id>. Anything else shows a "not found" page.
+const view = document.getElementById("view");
+const parts = location.pathname.split("/").filter(Boolean);
+const id = parts[0] === "product" && parts[1] ? decodeURIComponent(parts[1]) : null;
+
+function make(tag, cls, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+
+function notFound() {
+  document.title = "Not found - Frosted Glass";
+  view.textContent = "";
+  const box = make("div", "notfound glass");
+  const back = make("a", "btn primary", "Browse products");
+  back.href = "/product/";
+  box.append(make("h1", null, "Not found"), make("p", null, "We couldn't find that page."), back);
+  view.append(box);
+}
+
+function render(a) {
+  document.title = a.name + " - Frosted Glass";
+  const meta = document.querySelector('meta[name="description"]');
+  if (meta) meta.content = a.desc || "";
+  view.textContent = "";
+
+  const crumb = make("a", "crumb", "\u2190 All products");
+  crumb.href = "/product/";
+
+  // gallery
+  const images = (a.images && a.images.length ? a.images : [a.thumb]).filter(Boolean);
+  const left = make("div");
+  const stage = make("img", "stage");
+  stage.alt = a.name;
+  stage.src = "/" + images[0];
+  left.append(stage);
+  if (images.length > 1) {
+    const strip = make("div", "thumbs");
+    images.forEach((src, i) => {
+      const b = make("button");
+      b.type = "button";
+      b.setAttribute("aria-label", "Show image " + (i + 1));
+      b.setAttribute("aria-pressed", i === 0);
+      const t = make("img");
+      t.src = "/" + src;
+      t.alt = "";
+      b.append(t);
+      b.onclick = () => {
+        stage.src = "/" + src;
+        strip.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+      };
+      strip.append(b);
+    });
+    left.append(strip);
+  }
+
+  // info card
+  const info = make("aside", "info glass");
+  const buy = make("a", "btn primary block", "Buy for " + a.price + " R$");
+  buy.href = "/node.html?items=" + encodeURIComponent(a.id);
+  const facts = make("ul", "facts");
+  const addFact = (label, value, href) => {
+    const li = make("li");
+    li.append(make("span", null, label));
+    if (href) { const l = make("a", null, value); l.href = href; const b = make("b"); b.append(l); li.append(b); }
+    else li.append(make("b", null, value));
+    facts.append(li);
+  };
+  addFact("Format", ".rbxm file");
+  addFact("Payment", "Robux, through Roblox");
+  addFact("License", "See EULA", "/eula.html");
+  info.append(make("h1", null, a.name), make("div", "price", a.price + " R$"), make("p", "short", a.desc || ""), buy, facts);
+
+  const top = make("div", "detail");
+  top.append(left, info);
+  view.append(crumb, top);
+
+  // description + included
+  const hasDetails = a.details || (a.includes && a.includes.length);
+  if (hasDetails) {
+    const more = make("section", "more glass");
+    if (a.details) {
+      const d = make("div");
+      d.append(make("h2", null, "About this asset"), make("p", null, a.details));
+      more.append(d);
+    }
+    if (a.includes && a.includes.length) {
+      const inc = make("div");
+      const ul = make("ul");
+      a.includes.forEach(t => ul.append(make("li", null, t)));
+      inc.append(make("h2", null, "What's included"), ul);
+      more.append(inc);
+    }
+    view.append(more);
+  }
+}
+
+if (!id) {
+  notFound();
+} else {
+  fetch("/assets.json")
+    .then(r => { if (!r.ok) throw new Error("bad response"); return r.json(); })
+    .then(data => {
+      const a = (data.assets || []).find(x => x.id === id);
+      if (a) render(a); else notFound();
+    })
+    .catch(() => { view.textContent = "Could not load this product. Please refresh the page."; });
+}
+</script>
+</body>
+</html>
