@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy - Frosted Glass</title>
+<link rel="icon" type="image/png" href="FrostedGlassLogo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0d1b2a; --sea:#38c9c0; --violet:#8a7dff; --peach:#ffb4a2; --mist:#eaf6ff;
+  --glass:rgba(255,255,255,.12); --glass-line:rgba(255,255,255,.28);
+  --text:#eaf6ff; --muted:#a9bfd3;
+  --display:"Bricolage Grotesque",Georgia,sans-serif;
+  --body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+body{font-family:var(--body);color:var(--text);line-height:1.7;background:var(--ink);min-height:100vh;overflow-x:hidden}
+a{color:var(--sea)}
+
+/* background */
+.backdrop{position:fixed;inset:0;z-index:-1;background:var(--ink)}
+.backdrop i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.75}
+.backdrop i:nth-child(1){width:46vw;height:46vw;left:-10vw;top:-8vw;background:var(--violet)}
+.backdrop i:nth-child(2){width:40vw;height:40vw;right:-8vw;top:20vh;background:var(--sea)}
+.backdrop i:nth-child(3){width:34vw;height:34vw;left:30vw;bottom:-14vw;background:var(--peach);opacity:.5}
+
+.wrap{max-width:820px;margin:0 auto;padding:0 24px}
+.glass{
+  background:var(--glass);border:1px solid var(--glass-line);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 18px 40px rgba(5,12,24,.35);
+}
+
+/* top bar */
+header.bar{padding:18px 0}
+header.bar .wrap{display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.2rem;color:var(--text);text-decoration:none}
+.brand img{border-radius:8px}
+.back{color:var(--muted);text-decoration:none;font-weight:500}
+.back:hover{color:var(--text)}
+
+/* document */
+main{padding:32px 0 64px}
+main .doc{border-radius:24px;padding:40px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(2rem,5vw,3rem);line-height:1.1;letter-spacing:-.02em;margin-bottom:6px}
+.updated{color:var(--muted);margin-bottom:28px}
+h2{font-family:var(--display);font-weight:700;font-size:1.4rem;margin:30px 0 8px}
+p,li{color:var(--muted)}
+p{margin-bottom:12px}
+ul{padding-left:22px;margin-bottom:12px}
+li{margin-bottom:10px}
+strong{color:var(--text)}
+
+footer{padding:24px 0 calc(40px + env(safe-area-inset-bottom,0px));color:var(--muted);font-size:.92rem;text-align:center}
+footer a{color:var(--muted)}
+
+@media(max-width:600px){main .doc{padding:26px 20px}}
+</style>
+</head>
+<body>
+<div class="backdrop" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="FrostedGlassLogo.png" alt="" width="32" height="32">Frosted Glass</a>
+    <a class="back" href="index.html">&larr; Back to store</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <article class="doc glass">
+
+      <h1>Privacy Policy</h1>
+      <p class="updated">Last updated: DATE HERE</p>
+
+      <p>This Privacy Policy governs the collection, use, storage, and protection of information by Frosted Glass ("we," "our," or "us") when you visit our store, communicate with our team, or purchase our digital products and assets. By accessing our store, communicating through our official channels, or completing a transaction, you signify that you have read, understood, accepted, and agreed to the collection and use of your information as described below.</p>
+
+      <h2>1. Information We Collect</h2>
+      <p>To facilitate transactions, provide customer support, and ensure the security of our digital products, we may collect and process the following categories of information:</p>
+      <ul>
+        <li><strong>Direct Identifiers &amp; Account Information:</strong> When you make a purchase, request support, or interact with our storefront, we collect account details necessary for verification, including your Roblox Username, Roblox User ID, and Discord Tag/User ID.</li>
+        <li><strong>Transaction and Commercial Data:</strong> We collect records of the products you purchase (e.g., Buttons, Toggles, Topbars, Notifications, bundles), purchase timestamps, and transaction identification numbers.</li>
+        <li><strong>Communication Data:</strong> Records of communications between you and our support staff or administrators, including support tickets, bug reports, inquiries, and dispute history.</li>
+        <li><strong>Roblox Robux Payment Data:</strong> All financial transactions and payments are handled exclusively through Roblox Corporation using Robux. We do not process, collect, or store any real-money financial information, bank details, or credit card data. We only receive payment verification logs, Robux transaction IDs, and associated Roblox account names directly provided by the Roblox platform.</li>
+      </ul>
+
+      <h2>2. How We Use Information</h2>
+      <p>We utilize the collected information strictly for legitimate business, operational, and security purposes, including:</p>
+      <ul>
+        <li><strong>Transaction Fulfillment &amp; Access Granting:</strong> Verifying successful Robux payments, granting proper digital asset access, synchronizing inventory models, or assigning corresponding roles and permissions within our community platforms.</li>
+        <li><strong>Customer Support &amp; Communication:</strong> Responding to inquiries, troubleshooting script implementations, resolving technical issues, and providing updates regarding purchased items.</li>
+        <li><strong>Security, Fraud Prevention, and Compliance:</strong> Maintaining internal transactional logs to detect, investigate, and prevent fraudulent claims, unauthorized redistribution, and breaches of our Terms of Service.</li>
+        <li><strong>Legal and Policy Enforcement:</strong> Upholding our rights, enforcing legal agreements, and complying with applicable platform rules or legal obligations.</li>
+      </ul>
+
+      <h2>3. Data Sharing &amp; Third-Party Disclosure</h2>
+      <ul>
+        <li><strong>No Sale of Data:</strong> We never sell, trade, rent, or lease your personal information, account handles, or transactional data to third parties for marketing or commercial purposes.</li>
+        <li><strong>Service Providers &amp; Platforms:</strong> Your data is shared only with underlying platforms strictly as necessary to operate our store (specifically Roblox Corporation and Discord Inc.). These entities operate under their own independent privacy policies.</li>
+        <li><strong>Legal Obligations &amp; Safety:</strong> We may disclose your information if required to do so by law, or in the good-faith belief that such action is necessary to comply with legal processes, protect the safety of our users, or defend our intellectual property rights and store assets.</li>
+      </ul>
+
+      <h2>4. Data Security &amp; Retention</h2>
+      <ul>
+        <li><strong>Security Measures:</strong> We implement commercially reasonable administrative, technical, and physical security safeguards designed to protect your data against unauthorized access, alteration, disclosure, or destruction. Access to transaction logs is restricted solely to authorized Frosted Glass store administrators.</li>
+        <li><strong>Data Retention:</strong> We retain your transaction records and account identifiers for as long as necessary to fulfill the purposes outlined in this policy, maintain continuous purchase verification records, resolve disputes, and enforce our agreements.</li>
+      </ul>
+
+      <h2>5. Children's Privacy</h2>
+      <p>Our store offers digital products intended for use within the Roblox platform. We do not knowingly collect personally identifiable information from children under the age of 13 in violation of applicable laws. If you are a parent or guardian and believe your child has provided us with personal information without proper consent, please contact us so we can take appropriate remedial steps.</p>
+
+      <h2>6. Changes to This Privacy Policy</h2>
+      <p>We reserve the right to modify, amend, or update this Privacy Policy at any time to reflect changes in our business practices or platform policies. Any modifications will take effect immediately upon being posted within our store or community channels. Your continued use of our store following any updates constitutes your acceptance of the revised policy.</p>
+
+    </article>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a href="privacy.html">Privacy Policy</a> &middot;
+    <a href="terms.html">Terms of Service</a> &middot;
+    <a href="eula.html">EULA</a>
+  </div>
+</footer>
+</body>
+</html>
