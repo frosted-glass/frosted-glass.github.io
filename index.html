@@ -24,11 +24,11 @@ body{
   min-height:100vh;overflow-x:hidden;
 }
 /* backdrop that the glass sits on */
-.backdrop{position:fixed;inset:0;z-index:-1;background:var(--ink)}
-.backdrop i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.75}
-.backdrop i:nth-child(1){width:46vw;height:46vw;left:-10vw;top:-8vw;background:var(--violet)}
-.backdrop i:nth-child(2){width:40vw;height:40vw;right:-8vw;top:20vh;background:var(--sea)}
-.backdrop i:nth-child(3){width:34vw;height:34vw;left:30vw;bottom:-14vw;background:var(--peach);opacity:.5}
+/* backdrop: solid gray with a top blue glow */
+.backdrop{position:fixed;inset:0;z-index:-1;background:#555555}
+.backdrop i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.6}
+.backdrop i:nth-child(1){width:60vw;height:35vw;left:20vw;top:-15vw;background:#38c9c0}
+.backdrop i:nth-child(2), .backdrop i:nth-child(3){display:none}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--mist);outline-offset:3px;border-radius:8px}
 .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
@@ -174,7 +174,7 @@ input[type=text]{width:100%;padding:13px 14px;border-radius:12px;border:1px soli
 </style>
 </head>
 <body>
-<div class="backdrop" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="backdrop" aria-hidden="true"><i></i></div>
 
 <nav class="glass">
   <div class="wrap">
@@ -254,7 +254,8 @@ input[type=text]{width:100%;padding:13px 14px;border-radius:12px;border:1px soli
 
 <section id="faq">
   <div class="wrap">
-    <h2>Questions</h2>
+    <h2>Your questions.</h2>
+    <h2>Answered.</h2>
     <details class="glass"><summary>What file format do I get?</summary><p>You receive a .rbxm file.</p></details>
     <details class="glass"><summary>Can I use the assets in a commercial game?</summary><p>You are allowed to use these assets in a commercial project, but you aren't allowed to redistribute, sell or pirate any of out assets..</p></details>
     <details class="glass"><summary>Do I get updates?</summary><p>There are no updates after a purchase of a specific asset.</p></details>
