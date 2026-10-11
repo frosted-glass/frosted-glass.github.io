@@ -202,19 +202,6 @@ input[type=text]{width:100%;padding:13px 14px;border-radius:12px;border:1px soli
         <a class="btn ghost" href="#bundle">See the bundle</a>
       </div>
     </div>
-
-    <!-- live demo: the glass style you are buying -->
-    <div class="demo glass" aria-label="Interactive preview of the glass UI">
-      <div class="demo-top"><span>Player panel</span><small>Try it</small></div>
-      <div>
-        <div class="row" style="margin-bottom:8px"><span>Health</span><span id="hpText">70</span></div>
-        <div class="bar"><b id="hpBar"></b></div>
-      </div>
-      <div class="row"><button class="btn ghost small" id="hurt">Take damage</button><button class="btn primary small" id="heal">Heal</button></div>
-      <div class="slots" id="slots"></div>
-      <div class="row"><span>Notifications</span><button class="switch" id="sw" role="switch" aria-checked="true" aria-label="Notifications"></button></div>
-      <p class="hint" id="demoHint">Pick a slot, change the health, flip the switch.</p>
-    </div>
   </div>
 </header>
 
@@ -242,6 +229,10 @@ input[type=text]{width:100%;padding:13px 14px;border-radius:12px;border:1px soli
   </div>
 </section>
 
+<section id="contact">
+  
+</section>
+
 <section id="how">
   <div class="wrap">
     <h2>How buying works</h2>
@@ -255,21 +246,68 @@ input[type=text]{width:100%;padding:13px 14px;border-radius:12px;border:1px soli
   </div>
 </section>
 
+<style>
+  #faq {
+    padding: 40px 20px; /* Gives the section some breathing room */
+  }
+
+  #faq .wrap {
+    max-width: 800px;  /* Keeps the FAQ readable on wide screens */
+    margin: 0 auto;    /* Centers the entire container on the page */
+  }
+
+  #faq h2 {
+    text-align: center; /* Centers the "Your questions, answered." text */
+    margin-bottom: 24px; 
+  }
+
+  /* Style for your glass-morphism effect if needed */
+  .glass {
+    margin-bottom: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  summary {
+    cursor: pointer;
+    font-weight: bold;
+  }
+</style>
+
 <section id="faq">
   <div class="wrap">
-    <h2>Your questions, answered.</h2>
-    <details class="glass"><summary>What file format do I get?</summary><p>You receive a .rbxm file.</p></details>
-    <details class="glass"><summary>Can I use the assets in a commercial game?</summary><p>You are allowed to use these assets in a commercial project, but you aren't allowed to redistribute, sell or pirate any of out assets..</p></details>
-    <details class="glass"><summary>Do I get updates?</summary><p>There are no updates after a purchase of a specific asset.</p></details>
-    <details class="glass"><summary>What if my bio code is not accepted?</summary><p>Check that the code is on its own line in your bio, with no extra characters, then try again. Profile changes can take a minute to show.</p></details>
-    <details class="glass"><summary>What payment methods can I use?</summary><p>We only accept Robux payments.</p></details>
-    <details class="glass"><summary>Do I get future assets by purchasing the bundle?</summary><p>Yes, you do receive any future assets by purchasing our bundle.</p></details>
-    <details class="glass"><summary>Will I have access to my purchased assets anytime?</summary><p>Yes, by verifying your identity, you can see all of your purchased assets.</p></details>
-    <details class="glass"><summary>Are the transactions secure?</summary><p>Yes, all transactions processed by Node are secure.</p></details>
-    <details class="glass"><summary>What is Node?</summary><p>Node is our transaction system, used to process all payments.</p></details>
-    <details class="glass"><summary>Who owns Node?</summary><p>We are the owners and creators of Node. If you see another website using Node, it is not us. We do not share our technologies with other entities.</p></details>
+    <h1>Your questions, answered.</h1>
+    
+    <details class="glass">
+      <summary>What file format do I get?</summary>
+      <p>You receive a .rbxm file.</p>
+    </details>
+    
+    <details class="glass">
+      <summary>What payment methods can I use?</summary>
+      <p>We only accept Robux payments.</p>
+    </details>
+    
+    <details class="glass">
+      <summary>Do I get future assets by purchasing the bundle?</summary>
+      <p>Yes, you do receive any future assets by purchasing our bundle.</p>
+    </details>
+    
+    <details class="glass">
+      <summary>Will I have access to my purchased assets anytime?</summary>
+      <p>Yes, by verifying your identity, you can see all of your purchased assets.</p>
+    </details>
+    
+    <details class="glass">
+      <summary>Are the transactions secure?</summary>
+      <p>Yes, all transactions processed by Node are secure.</p>
+    </details>
   </div>
 </section>
+
 
 <footer>
   <div class="wrap foot-grid">
@@ -279,8 +317,8 @@ input[type=text]{width:100%;padding:13px 14px;border-radius:12px;border:1px soli
     </div>
 
     <nav class="foot-links" aria-label="Legal">
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Service</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
       <a href="eula.html">EULA</a>
     </nav>
 
