@@ -42,13 +42,22 @@ p.lead{color:var(--muted);font-size:1.12rem;max-width:46ch}
 section{padding:72px 0}
 
 /* nav */
-nav{position:sticky;top:0;z-index:10;padding-top:env(safe-area-inset-top,0px)}
-nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
-.brand{font-family:var(--display);font-weight:800;font-size:1.25rem;text-decoration:none}
-.links{display:flex;gap:22px;align-items:center}
-.links a{text-decoration:none;color:var(--muted);font-weight:500}
-.links a:hover{color:var(--text)}
-nav.glass{border-width:0 0 1px 0;box-shadow:none}
+.pillnav{
+  position:sticky;top:calc(14px + env(safe-area-inset-top,0px));z-index:20;
+  width:min(720px,calc(100% - 28px));margin:14px auto 0;
+  display:flex;align-items:center;gap:22px;
+  padding:10px 10px 10px 12px;border-radius:999px;
+  background:#0a0a0a;border:1px solid rgba(255,255,255,.07);
+  box-shadow:0 14px 36px rgba(0,0,0,.45);
+}
+.pillnav .logo{flex:none;width:52px;height:52px;border-radius:50%;background:#161616;display:grid;place-items:center;overflow:hidden}
+.pillnav .logo img{width:100%;height:100%;object-fit:contain;padding:8px}
+.pillnav .links{display:flex;align-items:center;gap:26px}
+.pillnav .links a{color:#f2f2f2;text-decoration:none;font-size:1.05rem;font-weight:500;letter-spacing:-.01em}
+.pillnav .links a:hover{opacity:.7}
+.pillnav .cta-pill{margin-left:auto;background:#fff;color:#0a0a0a;font-weight:700;font-size:1.05rem;padding:15px 28px;border-radius:999px;white-space:nowrap}
+.pillnav .cta-pill:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(255,255,255,.18)}
+@media(max-width:600px){.pillnav .links{display:none}}
 
 /* buttons */
 .btn{
@@ -173,18 +182,15 @@ input[type=text]{width:100%;padding:13px 14px;border-radius:12px;border:1px soli
 <body>
 <div class="backdrop" aria-hidden="true"><i></i><i></i><i></i></div>
 
-<nav class="glass">
-  <div class="wrap">
-    <a class="brand" href="#top" id="brandName">Frosted Glass</a>
-    <div class="links">
-      <a href="#assets">Assets</a>
-      <a href="#bundle">Bundle</a>
-      <a href="#how">How it works</a>
-      <a href="#faq">FAQ</a>
-      <button class="btn primary small" data-verify>Verify account</button>
-    </div>
+<header class="pillnav">
+  <a class="logo" href="#top" aria-label="Frosted Glass home"><img src="FrostedGlassLogo.png" alt="" width="52" height="52"></a>
+  <div class="links">
+    <a href="#assets">Assets</a>
+    <a href="#faq">FAQ</a>
+    <a href="CONTACT_LINK_HERE">Contact</a>
   </div>
-</nav>
+  <a class="btn cta-pill" href="#bundle">Get Unlimited Access</a>
+</header>
 
 <header class="hero" id="top">
   <div class="wrap">
